@@ -10,7 +10,8 @@ namespace StoneAssemblies.Blazor.MVVM.ViewModels
     using System.Runtime.CompilerServices;
 
     using Blorc.Data;
-    using Blorc.MVVM;
+
+    using StoneAssemblies.Blazor.MVVM.ViewModels.Interfaces;
 
     /// <summary>
     /// The view model base.
