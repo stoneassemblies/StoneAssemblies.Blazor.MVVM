@@ -8,13 +8,14 @@ namespace StoneAssemblies.Blazor.MVVM.Extensions
 {
     using Microsoft.Extensions.DependencyInjection;
 
+    using StoneAssemblies.Blazor.MVVM.Services;
     using StoneAssemblies.Blazor.MVVM.Services.Interfaces;
 
     public static class ServiceCollectionExtensions
     {
         public static void AddStoneAssembliesMVVMServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IViewModelFactory, IViewModelFactory>();
+            serviceCollection.AddSingleton<IViewModelFactory, ViewModelFactory>();
         }
     }
 }
