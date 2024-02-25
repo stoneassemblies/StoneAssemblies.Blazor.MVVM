@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Blorc.Core" Version="1.4.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.26" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Components\" />
+	</ItemGroup>
+</Project>
