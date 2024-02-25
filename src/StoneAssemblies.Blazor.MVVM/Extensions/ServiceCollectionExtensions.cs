@@ -16,6 +16,7 @@ namespace StoneAssemblies.Blazor.MVVM.Extensions
         public static void AddStoneAssembliesMVVMServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IViewModelFactory, ViewModelFactory>();
+            serviceCollection.AddSingleton<INavigationManager, NavigationManager>();
         }
     }
 }

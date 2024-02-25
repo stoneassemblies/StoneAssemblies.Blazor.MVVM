@@ -32,6 +32,7 @@ namespace StoneAssemblies.Blazor.MVVM.Components
         [Inject]
         private IViewModelFactory? ViewModelFactory { get; set; }
 
+        /// <inheritdoc/>
         protected override async Task OnInitializedAsync()
         {
             await this.InitializeViewModelAsync();
