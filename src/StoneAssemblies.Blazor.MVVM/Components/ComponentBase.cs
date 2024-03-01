@@ -16,7 +16,8 @@ namespace StoneAssemblies.Blazor.MVVM.Components
     public class ComponentBase<TViewModel> : Blorc.Components.BlorcComponentBase
         where TViewModel : class, ViewModels.Interfaces.IViewModel
     {
-        public ComponentBase()
+        public ComponentBase(bool injectComponentServices)
+            : base(injectComponentServices)
         {
             this.PropertyChanged += this.OnPropertyChanged;
         }
