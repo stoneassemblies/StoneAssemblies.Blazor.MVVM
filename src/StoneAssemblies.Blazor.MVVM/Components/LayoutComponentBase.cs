@@ -15,7 +15,7 @@ namespace StoneAssemblies.Blazor.MVVM.Components
     using StoneAssemblies.Blazor.MVVM.ViewModels.Interfaces;
 
     public class LayoutComponentBase<TViewModel> : Blorc.Components.BlorcLayoutComponentBase
-        where TViewModel : IViewModel
+        where TViewModel : class, IViewModel
     {
         public LayoutComponentBase()
         {
@@ -53,9 +53,12 @@ namespace StoneAssemblies.Blazor.MVVM.Components
                 return;
             }
 
-            this.ViewModel = this.ViewModelFactory.Create<TViewModel>();
-            this.MapViewToViewModelProperties();
+            this.ViewModel ??= this.ViewModelFactory.Create<TViewModel>();
+
+            this.ViewModel.InvokeAsync = this.InvokeAsync;
             this.ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
+
+            this.MapViewToViewModelProperties();
 
             await this.ViewModel.InitializeAsync();
         }

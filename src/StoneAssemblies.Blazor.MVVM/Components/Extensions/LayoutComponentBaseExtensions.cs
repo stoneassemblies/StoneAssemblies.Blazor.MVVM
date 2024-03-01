@@ -15,7 +15,7 @@ using StoneAssemblies.Blazor.MVVM.ViewModels.Interfaces;
 public static class LayoutComponentBaseExtensions
 {
     public static void MapViewToViewModelProperties<TViewModel>(this LayoutComponentBase<TViewModel> component)
-        where TViewModel : IViewModel
+        where TViewModel : class, IViewModel
     {
         var viewToViewModelProperties = component.GetType()
             .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy).Select(

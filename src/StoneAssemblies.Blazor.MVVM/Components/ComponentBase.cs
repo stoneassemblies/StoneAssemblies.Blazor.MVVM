@@ -59,9 +59,10 @@ namespace StoneAssemblies.Blazor.MVVM.Components
 
             this.ViewModel ??= this.ViewModelFactory.Create<TViewModel>();
 
-            this.MapViewToViewModelProperties();
-            this.ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
             this.ViewModel.InvokeAsync = this.InvokeAsync;
+            this.ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
+
+            this.MapViewToViewModelProperties();
 
             await this.ViewModel.InitializeAsync();
         }
