@@ -8,7 +8,7 @@ namespace StoneAssemblies.Blazor.MVVM.ViewModels.Interfaces
 {
     public interface IViewModel : Blorc.MVVM.IViewModel
     {
-        Func<Action, Task> InvokeAsync { get; set; }
+        Func<Func<Task>, Task> InvokeAsync { get; set; }
 
         Task InitializeAsync();
     }

@@ -45,7 +45,7 @@ namespace StoneAssemblies.Blazor.MVVM.ViewModels
         /// Gets or sets the invoke async.
         /// </summary>
         /// <remarks>TODO: Create a dispatcher service for this.</remarks>
-        public Func<Action, Task>? InvokeAsync { get; set; }
+        public Func<Func<Task>, Task>? InvokeAsync { get; set; }
 
         /// <summary>
         /// The initialize async.
