@@ -7,9 +7,11 @@
 namespace StoneAssemblies.Blazor.MVVM.Components
 {
     using System.ComponentModel;
+    using System.Reflection;
 
     using Microsoft.AspNetCore.Components;
 
+    using StoneAssemblies.Blazor.MVVM.Components.Attributes;
     using StoneAssemblies.Blazor.MVVM.Components.Extensions;
     using StoneAssemblies.Blazor.MVVM.Services.Interfaces;
 
@@ -30,12 +32,10 @@ namespace StoneAssemblies.Blazor.MVVM.Components
         }
 
         [Inject]
-        private IViewModelFactory? ViewModelFactory { get; set; }
-
-        /// <inheritdoc/>
-        protected override async Task OnInitializedAsync()
+        private IViewModelFactory? ViewModelFactory
         {
-            await this.InitializeViewModelAsync();
+            get => this.GetPropertyValue<IViewModelFactory?>(nameof(this.ViewModelFactory));
+            set => this.SetPropertyValue(nameof(this.ViewModelFactory), value);
         }
 
         private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -48,16 +48,44 @@ namespace StoneAssemblies.Blazor.MVVM.Components
                         this.StateHasChanged();
                     });
             }
+            else if (e.PropertyName == nameof(this.ViewModelFactory))
+            {
+                if (this.ViewModelFactory is not null)
+                {
+                    this.ViewModel ??= this.ViewModelFactory.Create<TViewModel>();
+                }
+            }
+            else
+            {
+                var viewModel = this.ViewModel;
+                if (viewModel is not null)
+                {
+                    var (propertyInfo, viewToViewModelAttribute) = this.GetType()
+                        .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy)
+                        .Select(info => (PropertyInfo: info, ViewToViewModelAttribute: info.GetCustomAttribute<ViewToViewModelAttribute>()))
+                        .FirstOrDefault(tuple => tuple.PropertyInfo.Name == e.PropertyName);
+
+                    if (propertyInfo is not null && viewToViewModelAttribute is not null)
+                    {
+                        var viewModelProperty = viewModel.GetType()
+                            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                            .FirstOrDefault(info => info.Name == viewToViewModelAttribute.PropertyName);
+
+                        if (viewModelProperty is not null)
+                        {
+                            viewModelProperty.SetValue(viewModel, propertyInfo.GetValue(this));
+                        }
+                    }
+                }
+            }
         }
 
         private async Task InitializeViewModelAsync()
         {
-            if (this.ViewModelFactory is null)
+            if (this.ViewModel is null)
             {
                 return;
             }
-
-            this.ViewModel ??= this.ViewModelFactory.Create<TViewModel>();
 
             this.ViewModel.InvokeAsync = this.InvokeAsync;
             this.ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
