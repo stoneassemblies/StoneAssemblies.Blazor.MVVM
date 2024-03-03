@@ -42,4 +42,38 @@ public static class ComponentBaseExtensions
             }
         }
     }
+
+    public static void MapViewToViewModelProperty<TViewModel>(this ComponentBase<TViewModel> component, string? viewPropertyName)
+        where TViewModel : class, IViewModel
+    {
+        var (propertyInfo, viewToViewModelAttribute) = component.GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy).Select(
+                info => (PropertyInfo: info,
+                            ViewToViewModelAttribute: info.GetCustomAttribute<ViewToViewModelAttribute>()))
+            .FirstOrDefault(tuple => tuple.PropertyInfo.Name == viewPropertyName);
+
+        if (propertyInfo is not null && viewToViewModelAttribute is not null)
+        {
+            var propertyName = viewToViewModelAttribute.PropertyName;
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                propertyName = propertyInfo.Name;
+            }
+
+            var componentViewModel = component.ViewModel;
+            if (componentViewModel is null)
+            {
+                return;
+            }
+
+            var viewModelProperty = componentViewModel.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .FirstOrDefault(info => info.Name == propertyName);
+
+            if (viewModelProperty is not null)
+            {
+                viewModelProperty.SetValue(componentViewModel, propertyInfo.GetValue(component));
+            }
+        }
+    }
 }
