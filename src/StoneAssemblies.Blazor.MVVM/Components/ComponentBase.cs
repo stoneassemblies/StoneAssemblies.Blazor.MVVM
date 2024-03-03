@@ -6,6 +6,7 @@
 
 namespace StoneAssemblies.Blazor.MVVM.Components
 {
+    using System;
     using System.ComponentModel;
     using System.Reflection;
 
@@ -67,9 +68,15 @@ namespace StoneAssemblies.Blazor.MVVM.Components
 
                     if (propertyInfo is not null && viewToViewModelAttribute is not null)
                     {
+                        var propertyName = viewToViewModelAttribute.PropertyName;
+                        if (string.IsNullOrWhiteSpace(propertyName))
+                        {
+                            propertyName = propertyInfo.Name;
+                        }
+
                         var viewModelProperty = viewModel.GetType()
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                            .FirstOrDefault(info => info.Name == viewToViewModelAttribute.PropertyName);
+                            .FirstOrDefault(info => info.Name == propertyName);
 
                         if (viewModelProperty is not null)
                         {
