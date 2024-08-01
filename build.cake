@@ -1,4 +1,4 @@
-#tool dotnet:?package=GitVersion.Tool&version=6.0.0
+#tool dotnet:?package=GitVersion.Tool&version=5.12.0
 
 #addin nuget:?package=Cake.Docker&version=1.2.0
 #addin nuget:?package=Cake.FileHelpers&version=6.0.0
