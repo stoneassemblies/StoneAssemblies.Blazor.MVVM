@@ -7,11 +7,6 @@
 
     public partial class SilentView
     {
-        public SilentView()
-            : base(true)
-        {
-        }
-
         [Parameter]
         [ViewToViewModel]
         public int Id

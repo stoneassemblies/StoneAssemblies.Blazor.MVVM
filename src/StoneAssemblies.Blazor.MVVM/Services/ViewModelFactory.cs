@@ -6,6 +6,8 @@
 
 namespace StoneAssemblies.Blazor.MVVM.Services;
 
+using System.ComponentModel;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using StoneAssemblies.Blazor.MVVM.Services.Interfaces;
@@ -41,7 +43,14 @@ public class ViewModelFactory : IViewModelFactory
         where TViewModel : IViewModel
     {
         var viewModel = ActivatorUtilities.CreateInstance<TViewModel>(this.serviceProvider, parameters);
+
+        viewModel.PropertyChanged += ViewModel_OnPropertyChanged;
+
         await viewModel.InitializeAsync();
         return viewModel;
+    }
+
+    private void ViewModel_OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
     }
 }

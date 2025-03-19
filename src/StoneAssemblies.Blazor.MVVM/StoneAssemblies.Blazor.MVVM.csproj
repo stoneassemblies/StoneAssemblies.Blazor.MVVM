@@ -5,19 +5,12 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Blorc.Core" Version="1.4.0" />
+		<PackageReference Include="Blorc.Core" Version="1.5.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.32" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.36" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
-	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Update="Fody" Version="6.8.1">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	  </PackageReference>
-	  <PackageReference Update="Serilog" Version="4.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.14" />
 	</ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 ﻿namespace StoneAssemblies.Blazor.MVVM.Tests.Stubs.ViewModels;
 
-using StoneAssemblies.Blazor.MVVM.Tests.Stubs.Components;
 using StoneAssemblies.Blazor.MVVM.ViewModels;
 
 public class SilentViewViewModel : ViewModelBase
@@ -16,5 +15,4 @@ public class SilentViewViewModel : ViewModelBase
         get => this.GetPropertyValue<int>(nameof(this.Id));
         set => this.SetPropertyValue(nameof(this.Id), value);
     }
-
 }
